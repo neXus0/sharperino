@@ -348,7 +348,7 @@ namespace D_Udyr
 
         private static void Forest()
         {
-            if (_player.HasBuff("Recall") || Utility.InFountain()) return;
+            if (_player.HasBuff("Recall") || Player.InFountain()) return;
 
             if (_e.IsReady() && _config.Item("ForestE").GetValue<bool>())
             {
@@ -364,8 +364,8 @@ namespace D_Udyr
         {
             if (_w.IsReady())
             {
-                if (_player.HasBuff("Recall") || Utility.InFountain()) return;
-                if (Utility.CountEnemysInRange(1000) >= 1 &&
+                if (_player.HasBuff("Recall") || Player.InFountain()) return;
+                if (Utility.CountEnemiesInRange(1000) >= 1 &&
                     _player.Health <= (_player.MaxHealth*(_config.Item("AutoShield%").GetValue<Slider>().Value)/100))
                 {
                     _w.Cast();
@@ -471,11 +471,11 @@ namespace D_Udyr
                 var iBlademyhp = _player.Health <=
                                  (_player.MaxHealth*(_config.Item("Blademyhp").GetValue<Slider>().Value)/100);
                 var iOmen = _config.Item("Omen").GetValue<bool>();
-                var iOmenenemys = hero.CountEnemysInRange(450) >= _config.Item("Omenenemys").GetValue<Slider>().Value;
+                var iOmenenemys = hero.CountEnemiesInRange(450) >= _config.Item("Omenenemys").GetValue<Slider>().Value;
                 var iTiamat = _config.Item("Tiamat").GetValue<bool>();
                 var iHydra = _config.Item("Hydra").GetValue<bool>();
                 var iRighteous = _config.Item("Righteous").GetValue<bool>();
-                var iRighteousenemys = hero.CountEnemysInRange(_config.Item("Righteousenemysrange").GetValue<Slider>().Value) >= _config.Item("Righteousenemys").GetValue<Slider>().Value;
+                var iRighteousenemys = hero.CountEnemiesInRange(_config.Item("Righteousenemysrange").GetValue<Slider>().Value) >= _config.Item("Righteousenemys").GetValue<Slider>().Value;
 
                 if (hero.IsValidTarget(450) && iBilge && (iBilgeEnemyhp || iBilgemyhp) && _bilge.IsReady())
                 {
@@ -531,9 +531,9 @@ namespace D_Udyr
             var iusemppotion = _config.Item("usemppotions").GetValue<bool>();
             var iusepotionmp = _player.Mana <=
                                (_player.MaxMana * (_config.Item("usepotionmp").GetValue<Slider>().Value) / 100);
-            if (Utility.InFountain() || ObjectManager.Player.HasBuff("Recall")) return;
+            if (Player.InFountain() || ObjectManager.Player.HasBuff("Recall")) return;
 
-            if (Utility.CountEnemysInRange(800) > 0 ||
+            if (Utility.CountEnemiesInRange(800) > 0 ||
                 (mobs.Count > 0 && _config.Item("ActiveJungle").GetValue<KeyBind>().Active && (Items.HasItem(1039) ||
                  SmiteBlue.Any(i => Items.HasItem(i)) || SmiteRed.Any(i => Items.HasItem(i)) || SmitePurple.Any(i => Items.HasItem(i)) ||
                   SmiteBlue.Any(i => Items.HasItem(i)) || SmiteGrey.Any(i => Items.HasItem(i))
