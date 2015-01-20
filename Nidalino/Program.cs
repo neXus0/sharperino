@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -622,7 +622,7 @@ namespace D_Nidalee
                         _lotis.Cast();
                 }
             }
-            if (iZhonyas && iZhonyashp && Utility.CountEnemysInRange(1000) >= 1)
+            if (iZhonyas && iZhonyashp && Utility.CountEnemiesInRange(1000) >= 1)
             {
                 _zhonya.Cast(Player);
 
@@ -639,9 +639,9 @@ namespace D_Nidalee
             var iusemppotion = Config.Item("usemppotions").GetValue<bool>();
             var iusepotionmp = Player.Mana <=
                                (Player.MaxMana * (Config.Item("usepotionmp").GetValue<Slider>().Value) / 100);
-            if (Utility.InFountain() || ObjectManager.Player.HasBuff("Recall")) return;
+            if (Player.InFountain() || ObjectManager.Player.HasBuff("Recall")) return;
 
-            if (Utility.CountEnemysInRange(800) > 0 ||
+            if (Utility.CountEnemiesInRange(800) > 0 ||
                 (mobs.Count > 0 && Config.Item("LaneClear").GetValue<KeyBind>().Active && (Items.HasItem(1039) ||
                  SmiteBlue.Any(i => Items.HasItem(i)) || SmiteRed.Any(i => Items.HasItem(i)) || SmitePurple.Any(i => Items.HasItem(i)) ||
                   SmiteBlue.Any(i => Items.HasItem(i)) || SmiteGrey.Any(i => Items.HasItem(i))
@@ -747,7 +747,7 @@ namespace D_Nidalee
             if (Player.Spellbook.CanUseSpell(SpellSlot.E) == SpellState.Ready && Player.IsMe)
             {
 
-                if (Player.HasBuff("Recall") || Utility.InFountain()) return;
+                if (Player.HasBuff("Recall") || Player.InFountain()) return;
 
                 if (E.IsReady() &&
                     Player.Health <= (Player.MaxHealth*(Config.Item("HPercent").GetValue<Slider>().Value)/100))
@@ -778,10 +778,10 @@ namespace D_Nidalee
         {
             foreach (var hero in ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.IsAlly && !hero.IsMe))
             {
-                if (Player.HasBuff("Recall") || hero.HasBuff("Recall") || Utility.InFountain()) return;
+                if (Player.HasBuff("Recall") || hero.HasBuff("Recall") || Player.InFountain()) return;
                 if (E.IsReady() && Config.Item("AllyUseAutoE").GetValue<bool>() &&
                     (hero.Health/hero.MaxHealth)*100 <= Config.Item("AllyHPercent").GetValue<Slider>().Value &&
-                    Utility.CountEnemysInRange(1200) > 0 &&
+                    Utility.CountEnemiesInRange(1200) > 0 &&
                     hero.Distance(Player.ServerPosition) <= E.Range)
                 {
                     E.Cast(hero);
